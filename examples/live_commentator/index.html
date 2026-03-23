@@ -1,0 +1,1946 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Build Modular, Asynchronous, and Composable AI Pipelines">
+      
+      
+      
+        <link rel="canonical" href="https://google-gemini.github.io/genai-processors/examples/live_commentator/">
+      
+      
+        <link rel="prev" href="../research_agent/">
+      
+      
+        <link rel="next" href="../live_illustrator/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Live commentator - GenAI Processors</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#live-commentator-example" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="GenAI Processors" class="md-header__button md-logo" aria-label="GenAI Processors" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            GenAI Processors
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Live commentator
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/google-gemini/genai-processors" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    genai-processors
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="GenAI Processors" class="md-nav__button md-logo" aria-label="GenAI Processors" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    GenAI Processors
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/google-gemini/genai-processors" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    genai-processors
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../principles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Principles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/async-streaming/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Async & Streaming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/realtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Realtime Processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/function-calling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Function Calling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/supported-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supported Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/built-in-processors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Built-in Processors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/tracing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/caching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Caching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/websocket-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WebSocket Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rapid Prototyping
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Rapid Prototyping
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rapid-prototyping/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command Line
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rapid-prototyping/ai-studio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI Studio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rapid-prototyping/coding-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coding Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../research_agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Research Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live commentator
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live commentator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-commentator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Running the commentator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗣️ Conversation Logic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔄 State Machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏹️ States
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ▶️ Actions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-transitions-and-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 State Transitions and Logic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timing-and-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Timing and Latency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-usage-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ℹ️ Usage Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../live_illustrator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Illustrator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../widgets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Widgets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials (colabs)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials (colabs)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://colab.sandbox.google.com/github/google-gemini/genai-processors/blob/main/notebooks/content_api_intro.ipynb" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Content API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://colab.sandbox.google.com/github/google-gemini/genai-processors/blob/main/notebooks/processor_intro.ipynb" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processor Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://colab.sandbox.google.com/github/google-gemini/genai-processors/blob/main/notebooks/create_your_own_processor.ipynb" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create a Processor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://colab.sandbox.google.com/github/google-gemini/genai-processors/blob/main/notebooks/live_processor_intro.ipynb" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Live Processors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://colab.sandbox.google.com/github/google-gemini/genai-processors/blob/main/notebooks/function_calling.ipynb" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Function Calling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-the-commentator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Running the commentator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🗣️ Conversation Logic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔄 State Machine
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏹️ States
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ▶️ Actions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#state-transitions-and-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔀 State Transitions and Logic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timing-and-latency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⏱️ Timing and Latency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-usage-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ℹ️ Usage Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<p>This page is taken from the
+<a href="https://github.com/google-gemini/genai-processors/blob/main/examples/live_commentator/">examples/live_commentator/</a>
+directory and refers to the code there.</p>
+<h1 id="live-commentator-example">Live Commentator Example 🎙️</h1>
+<p>The Live Commentator is a dynamic conversational agent that actively drives the
+interaction, continuously generating commentary on input video and audio, asking
+questions, and guiding the user towards accomplishing tasks. The user can
+interact by asking questions, sharing a screen, or providing a camera feed. The
+Live Commentator seamlessly transitions between these different scenarios,
+adapting its commentary to the changing context. It utilizes Gemini's multimodal
+capabilities and asynchronous function calls to provide an engaging and
+responsive experience.</p>
+<p><a href="https://github.com/google-gemini/genai-processors/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" /></a></p>
+<h2 id="running-the-commentator">🚀 Running the commentator</h2>
+<p>We recommend the AI Studio version of the agent as it utilizes the echo
+cancellation built into the browser. Please see commentator_ais.py for
+instructions.</p>
+<h2 id="conversation-logic">🗣️ Conversation Logic</h2>
+<p>The Live Commentator agent logic is fully contained in the <code>LiveCommentator</code>
+class in <code>commentator.py</code> and is developed as a GenAI Processor. This makes it
+easier to combine with other processors such as <code>EventDetection</code> or
+<code>RateLimitAudio</code>.</p>
+<p>The Live Commentator acts as a state machine, transitioning between different
+states based on user input, detected events in the video stream, and the model's
+responses. It orchestrates the flow of data between the user, the event
+detection processor, and the Gemini Live API, ensuring timely and relevant
+commentary.</p>
+<p>The key to the LiveCommentator's behavior is its ability to <em>interrupt</em> its
+own commentary when notable new input is observed. This is achieved through a
+combination of:</p>
+<ol>
+<li><strong>Event Detection</strong>: A separate <code>EventDetection</code> processor analyzes the
+    video stream for significant events (e.g., a person appearing, a new object
+    being shown).</li>
+<li><strong>Voice Activity Detection (VAD)</strong>: Built into the Gemini Live API, VAD
+    detects when the user is speaking, allowing the user to interrupt the
+    commentary.</li>
+<li><strong>Async Function Calls</strong>: The Gemini API supports non-blocking function
+    calls. The <code>LiveCommentator</code> uses this to schedule future commentary
+    <em>without</em> interrupting the current utterance. This allows for a more natural
+    and responsive experience. One async function call, <code>wait_for_user</code>, is
+    returned by Gemini when the Live Commentator needs to wait for the user to
+    answer a question or to do something. It waits for a set duration (currently
+    5 seconds) and resumes the commentary if no relevant input is received.</li>
+</ol>
+<h2 id="state-machine">🔄 State Machine</h2>
+<p>The LiveCommentator operates based on the following states and transitions.
+<code>EVENT_DETECTION_(START|STOP)</code> are only for this schema (you will not find them
+in code) and signify a request from the event detection processor to start or
+stop the commentary. All the other states and actions are present in the code.</p>
+<pre class="mermaid"><code>---
+title: Live Commentary State Machine
+---
+graph TD
+    A{OFF} --&gt;|EVENT_DETECTION_START| B{TALKING};
+    B --&gt; |EVENT_DETECTION_STOP| A
+    B --&gt;|INTERRUPT|C{USER_IS_TALKING}
+    B --&gt;|REQUEST_INTERRUPT|D(REQUESTING_INTERRUPTION)
+    B --&gt;|WAIT_FOR_USER| H{WAITING_FOR_USER}
+    B --&gt;|REQUEST_FROM_COMMENTATOR| E(REQUESTING_COMMENT);
+    B --&gt;|REQUEST_FROM_USER| F(REQUESTING_RESPONSE);
+    D --&gt;|INTERRUPT| G(INTERRUPTED_FROM_DETECTION);
+    D --&gt;|STREAM_MEDIA_PART| B;
+    E --&gt;|STREAM_MEDIA_PART| B;
+    F --&gt;|STREAM_MEDIA_PART| B;
+    G --&gt;|STREAM_MEDIA_PART| B;
+    E --&gt; |REQUEST_INTERRUPT|D;
+    H --&gt; |REQUEST_INTERRUPT|D;
+    H --&gt;|REQUEST_FROM_COMMENTATOR| E;
+    C --&gt;|STREAM_MEDIA_PART| B
+
+    subgraph  legend
+        I{State}
+        J(Short-lived State)
+    end
+
+style A fill:#888,stroke:#333,stroke-width:2px
+style B fill:#888,stroke:#333,stroke-width:2px
+style C fill:#888,stroke:#333,stroke-width:2px
+style D fill:#888,stroke:#333,stroke-width:2px
+style E fill:#888,stroke:#333,stroke-width:2px
+style F fill:#888,stroke:#333,stroke-width:2px
+style G fill:#888,stroke:#333,stroke-width:2px
+style H fill:#888,stroke:#333,stroke-width:2px</code></pre>
+<h2 id="states">⏹️ States</h2>
+<ul>
+<li><strong>OFF</strong>: The commentator is inactive. No commentary is generated. The user
+    can still ask questions, but the commentator is not automatically generating
+    output.</li>
+<li><strong>TALKING</strong>: The commentator is actively generating commentary or responding
+    to the user. This is the "steady state" of operation.</li>
+<li><strong>USER_IS_TALKING</strong>: The user has started speaking (detected by VAD). The
+    commentator is waiting for the user to finish. The commentator stopped
+    talking.</li>
+<li><strong>REQUESTING_INTERRUPTION</strong>: An event has been detected that requires
+    interrupting the current commentary. The commentator is about to send a
+    request to the model to generate an interruptive comment. The commentator
+    will keep talking while the request is sent.</li>
+<li><strong>REQUESTING_COMMENT</strong>: The commentator is requesting a new comment from the
+    model. This happens when the commentator is turned on or when a scheduled
+    comment is due. This happens when the commentator will soon finish its
+    current comment.</li>
+<li><strong>REQUESTING_RESPONSE</strong>: The commentator is requesting a response to a
+    user's question or input. This input is text-based. This is not used in the
+    AI Studio version of the commentator (no text entry).</li>
+<li><strong>INTERRUPTED_FROM_DETECTION</strong>: The commentary should be interrupted by
+    an event and the system is waiting for the model to generate the new audio.
+    The commentator keeps talking until it receives the response of the model
+    generating the interruption.</li>
+<li><strong>WAITING_FOR_USER</strong>: The commentator has finished speaking (perhaps it
+    asked a question) and is waiting for the user to respond or for an event to
+    occur. The commentator will only wait for a fixed amount of time; if the
+    user doesn't respond within <code>MAX_SILENCE_WAIT_FOR_USER_SEC</code>, the commentator
+    will resume commentating.</li>
+</ul>
+<h2 id="actions">▶️ Actions</h2>
+<p>The <code>CommentatorStateMachine</code> uses the following <code>Action</code> enum to trigger state
+transitions:</p>
+<ul>
+<li><strong>TURN_ON</strong>: Activates the commentator. The model will begin generating
+    commentary. This action is triggered by the <code>start_commentating</code> async
+    function call. The async nature of the function is what enables the flexible
+    scheduling of the commentary: it can interrupt, wait until the current
+    comment is done, or just be silent and let the user talk.</li>
+<li><strong>TURN_OFF</strong>: Deactivates the current commentator. The user can still
+    ask questions, but the commentator will not automatically generate
+    commentaries.</li>
+<li><strong>STREAM_MEDIA_PART</strong>: New audio has been received from the model. This
+    action updates the internal state related to the current generation request
+    (latency, audio duration, etc.) and typically transitions the state to
+    <code>TALKING</code>.</li>
+<li><strong>REQUEST_FROM_USER</strong>: A request has been received from the user (e.g., a
+    question or command). This triggers a request to the model.</li>
+<li><strong>REQUEST_INTERRUPT</strong>: The <code>EventDetection</code> processor has detected a
+    significant event. This <em>prepares</em> for an interruption, but doesn't
+    immediately stop the current audio. The state machine waits for the model to
+    confirm the interruption.</li>
+<li><strong>REQUEST_FROM_COMMENTATOR</strong>: A scheduled comment is due. This triggers a
+    request to the model to generate a new comment.</li>
+<li><strong>INTERRUPT</strong>: The user has interrupted the commentator (via VAD) or an
+    event has been detected <em>and</em> the model has confirmed the interruption. This
+    immediately stops the current audio output.</li>
+<li><strong>WAIT_FOR_USER</strong>: The model has decided to pause the commentary and wait
+    for the user to respond or provide visual input. This is triggered by the
+    <code>wait_for_user</code> async function call.</li>
+</ul>
+<h2 id="state-transitions-and-logic">🔀 State Transitions and Logic</h2>
+<p>The <code>CommentatorStateMachine</code>'s <code>update</code> method defines the state transitions.
+Here's a breakdown of the key transitions, illustrating how the commentator
+responds to various events:</p>
+<ol>
+<li>
+<p><strong>Starting Commentary (<code>OFF</code> -&gt; <code>TALKING</code>)</strong>:</p>
+<ul>
+<li>The event detection detects people in front of the camera: it sends a
+    "start commentating" request to the model.</li>
+<li>The model triggers the <code>start_commentating</code> function.</li>
+<li>The <code>LiveCommentator</code> receives the function call.</li>
+<li>The state transitions to <code>TALKING</code>.</li>
+<li>A request is sent to the model to generate commentary
+    (<code>REQUEST_FROM_COMMENTATOR</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>User Interrupts (<code>TALKING</code> -&gt; <code>USER_IS_TALKING</code> -&gt;
+    <code>REQUESTING_RESPONSE</code>)</strong>:</p>
+<ul>
+<li>The Gemini Live API's VAD detects the user speaking.</li>
+<li>The <code>LiveCommentator</code> receives an <code>interrupted</code> signal.</li>
+<li>The state transitions to <code>USER_IS_TALKING</code>.</li>
+<li>The current audio output is stopped.</li>
+<li>After a short delay (waiting for the user to finish their utterance),
+    the state transitions to <code>REQUESTING_RESPONSE</code>, and a request is sent
+    to the model to generate a response to the user.</li>
+</ul>
+</li>
+<li>
+<p><strong>Event Interrupts (<code>TALKING</code> -&gt; <code>REQUESTING_INTERRUPTION</code> -&gt;
+    <code>INTERRUPTED_FROM_DETECTION</code> -&gt; <code>TALKING</code>)</strong>:</p>
+<ul>
+<li>The <code>EventDetection</code> processor detects a significant event.</li>
+<li>The <code>LiveCommentator</code> receives an <code>interrupt_request</code> signal.</li>
+<li>The state transitions to <code>REQUESTING_INTERRUPTION</code>.</li>
+<li>A request is sent to the model to generate a comment about the detected
+    event (<code>REQUEST_INTERRUPT</code>). The model's response <em>confirms</em> the
+    interruption.</li>
+<li>When the model confirms the interruption (by sending an <code>interrupted</code>
+    response), the state transitions to <code>INTERRUPTED_FROM_DETECTION</code>.</li>
+<li>When the first audio part of the interrupting comment is received, the
+    <code>LiveCommentator</code> <em>yields</em> the <code>interrupted</code> response to the rate
+    limit audio processor, stopping the previous audio stream. It starts
+    playing the new audio straightaway and transitions to <code>TALKING</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Scheduled Comments (<code>TALKING</code> -&gt; <code>REQUESTING_COMMENT</code> -&gt; <code>TALKING</code>)</strong>:</p>
+<ul>
+<li>The <code>LiveCommentator</code> tracks the duration of the current commentary.</li>
+<li>Before the current commentary finishes, a new comment is scheduled at a
+    time that would make the model output the content of the new comment
+    just after the current one is fully played. This scheduling is based on
+    an estimate of TTFT (see ⏱️ timing and latency section below). The
+    state is still in <code>TALKING</code>.</li>
+<li>When the scheduled time arrives, the state transitions to
+    <code>REQUESTING_COMMENT</code>.</li>
+<li>A request is sent to the model to generate the next comment
+    (<code>REQUEST_FROM_COMMENTATOR</code>).</li>
+<li>When the first audio part of the new comment is received, the state
+    transitions to <code>TALKING</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Waiting for User (<code>TALKING</code> -&gt; <code>WAITING_FOR_USER</code>)</strong>:</p>
+<ul>
+<li>The <code>LiveCommentator</code> received a <code>wait_for_user</code> async tool call from
+    the model.</li>
+<li>The state transitions to <code>WAITING_FOR_USER</code>.</li>
+<li>The current audio output is not interrupted. It is played until the end.</li>
+<li>Then a timer is started. If the user doesn't interrupt within
+    <code>MAX_SILENCE_WAIT_FOR_USER_SEC</code>, a new comment is scheduled.</li>
+<li>If the user does interrupt by responding, the state transitions to
+    <code>USER_IS_TALKING</code> and the logic from step 2 applies.</li>
+<li>If an event is detected, the state transitions as in step 3.</li>
+</ul>
+</li>
+<li>
+<p><strong>Stopping Commentary (<code>*</code> -&gt; <code>OFF</code>)</strong>:</p>
+<ul>
+<li>The <code>EventDetection</code> processor detects that there is no one in front of
+    the camera. It sends a "stop commentating" request to the model.</li>
+<li>The <code>LiveCommentator</code> receives a tool call cancellation from the model</li>
+<li>The state transitions to <code>OFF</code>.</li>
+<li>Any scheduled comments are cancelled.</li>
+</ul>
+</li>
+</ol>
+<h2 id="timing-and-latency">⏱️ Timing and Latency</h2>
+<p>The <code>LiveCommentator</code> keeps track of the latency of each generation request,
+measured as the time from when the request is sent to the model, to when the
+first audio part is received. The <code>LiveCommentator</code> uses a history of recent
+latency values (also called "TTFT," or "time to first token," in the code) to
+predict the latency of the <em>next</em> comment. This prediction is used to schedule
+the next comment <em>just before</em> the current comment finishes, minimizing the gap
+between utterances while still allowing for interruptions. The
+<code>predict_next_ttft()</code> method calculates this predicted TTFT (using a mean-std
+approach). The <code>tentative_trigger_time()</code> method calculates the time at which
+the next comment <em>should</em> be triggered, based on the predicted TTFT and the
+duration of the current audio.</p>
+<h2 id="i-usage-notes">ℹ️ Usage Notes</h2>
+<ul>
+<li>The <code>LiveCommentator</code> expects audio and video input on the <code>realtime</code>
+    substream. Other substreams are used for control signals.</li>
+<li>The <code>EventDetection</code> processor is crucial for responsive interruptions. Its
+    configuration (prompt, sensitivity) significantly impacts the commentator's
+    behavior.</li>
+<li>The <code>RateLimitAudio</code> processor is typically used <em>after</em> the
+    <code>LiveCommentator</code> to ensure the audio output is played back at the correct
+    speed and can be interrupted properly.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../research_agent/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Research Agent">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Research Agent
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../live_illustrator/" class="md-footer__link md-footer__link--next" aria-label="Next: Live Illustrator">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Live Illustrator
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
